@@ -20,6 +20,7 @@ const ScanPointSchema = new Schema({
 
 const DecisionSchema = new Schema(
   {
+    id: { type: String, required: true, index: true },
     protocols: {
       type: [{ type: String, enum: Object.values(ProtocolType) }],
       required: true,

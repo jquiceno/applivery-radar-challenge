@@ -15,4 +15,4 @@ const controller = new DecideTargetController(useCase);
 
 export const radarRouter = Router();
 
-radarRouter.post('/', validateDto(DecideTargetDto), controller.execute.bind(controller));
+radarRouter.post('/', validateDto(DecideTargetDto, 'body'), controller.execute.bind(controller));

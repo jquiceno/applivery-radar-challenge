@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import { radarRouter } from './infrastructure/routes';
+import { radarRouter, targetDecisionRouter } from './infrastructure/routes';
 
 export default function app(port: string, cb: () => void) {
   const app = express();
@@ -12,6 +12,7 @@ export default function app(port: string, cb: () => void) {
   app.use(express.urlencoded({ extended: true }));
 
   app.use('/radar', radarRouter);
+  app.use('/audit', targetDecisionRouter);
 
   // Basic route
   app.get('/', (_req: Request, res: Response) => {

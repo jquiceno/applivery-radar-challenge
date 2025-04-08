@@ -16,6 +16,7 @@ export class MongooseDecisionRepository implements TargetDecisionRepository {
         allies: point.allies,
       })),
       target: decision.target,
+      id: decision.id,
     });
 
     return createdDecision._id.toString();
@@ -27,13 +28,13 @@ export class MongooseDecisionRepository implements TargetDecisionRepository {
   }
 
   async findById(id: string): Promise<TargetDecision | null> {
-    const doc = await DecisionModel.findById(id).lean();
+    const doc = await DecisionModel.findOne({ id }).lean();
     if (!doc) return null;
     return this.mapToEntity(doc);
   }
 
   async delete(id: string): Promise<string> {
-    await DecisionModel.findByIdAndDelete(id);
+    await DecisionModel.deleteOne({ id });
     return id;
   }
 
@@ -51,7 +52,7 @@ export class MongooseDecisionRepository implements TargetDecisionRepository {
       doc.protocols as ProtocolType[],
       scanPoints,
       new Coordinates(doc.target.x, doc.target.y),
-      doc._id.toString(),
+      doc.id,
       doc.createdAt,
     );
   }
