@@ -1,12 +1,14 @@
-// infrastructure/middleware/validate.ts
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 
-export function validateDto<T extends object>(dtoClass: new () => T) {
+export function validateDto<T extends object>(dtoClass: new () => T, type: 'body' | 'params') {
   return async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
-    const instance = plainToInstance(dtoClass, body);
+
+    const data = type === 'body' ? body : req.params;
+
+    const instance = plainToInstance(dtoClass, data);
     const errors = await validate(instance, {
       whitelist: true,
       forbidNonWhitelisted: true,
