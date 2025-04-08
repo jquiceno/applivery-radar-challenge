@@ -19,11 +19,11 @@ const controller = new TargetDecisionController(
 targetDecisionRouter.get('/', controller.getAll.bind(controller));
 targetDecisionRouter.get(
   '/:id',
-  validateDto(GetTargetDecisionDto),
+  validateDto(GetTargetDecisionDto, 'params'),
   controller.getById.bind(controller),
 );
 targetDecisionRouter.delete(
   '/:id',
-  validateDto(GetTargetDecisionDto),
+  validateDto(GetTargetDecisionDto, 'params'),
   controller.delete.bind(controller),
 );
